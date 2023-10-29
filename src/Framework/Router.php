@@ -3,6 +3,7 @@
 declare(strict_types = 1);
 
 namespace Framework;
+use App\Controllers\HomeController;
 
 class Router 
 {
@@ -39,7 +40,11 @@ class Router
             ){
                 continue;
             }
-            echo 'route found';
+
+            [$class, $function] = $route['controller'];
+
+            $controllerInstance = new $class();
+            $controllerInstance->{$function}(); // square brackets not required
         } 
     }
 }
