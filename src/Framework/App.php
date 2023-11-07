@@ -1,15 +1,22 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Framework;
 
 class App
 {
     private Router $router;
-    public function __construct()
+    private Container $container;
+    public function __construct($containerDefinitionsPath = null)
     {
         $this->router = new Router();
+        $this->container = new Container();
+
+        if ($containerDefinitionsPath) {
+            $containDefinitions = include $containerDefinitionsPath;
+            $this->container->addDefinitions($containDefinitions);
+        }
     }
     public function run()
     {
